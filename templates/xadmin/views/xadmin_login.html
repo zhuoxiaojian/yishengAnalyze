@@ -1,0 +1,25 @@
+{% extends "xadmin/views/login.html" %}
+{% load i18n xadmin_tags %}
+
+{% block extrastyle %}{{ block.super }}
+<style type="text/css">
+  .form-signin {
+      max-width: 320px;
+    -webkit-border-radius: 10px;
+       -moz-border-radius: 10px;
+            border-radius: 10px;
+    -webkit-box-shadow: 0 0px 40px rgba(0,0,0,.2);
+       -moz-box-shadow: 0 0px 40px rgba(0,0,0,.2);
+            box-shadow: 0 0px 40px rgba(0,0,0,.2);
+  }
+</style>
+{% endblock %}
+
+{% block login_heading %}
+
+<p style="text-align: center;margin-top: 5px">
+    <img src="/static/bigyishubao.png" height="18%" width="18%"/>
+</p>
+<h2 style="text-align: center">{% trans "易数宝大数据分析平台" %}</h2>
+
+{% endblock %}
