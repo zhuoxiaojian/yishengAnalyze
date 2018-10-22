@@ -15,6 +15,7 @@ import sys
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
+sys.path.insert(0, os.path.join(BASE_DIR, 'yi_sheng_apps'))
 sys.path.insert(0, os.path.join(BASE_DIR, 'extra_apps'))
 sys.path.insert(0, os.path.join(BASE_DIR, 'utils'))
 # Quick-start development settings - unsuitable for production
@@ -54,6 +55,7 @@ INSTALLED_APPS = [
     'constant',
     'rest_framework',
     'corsheaders',
+    'yiShengUser'
 
 ]
 
@@ -98,16 +100,20 @@ WSGI_APPLICATION = 'yishengAnalyze.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'yishengAnalyze',
+        'NAME': 'yishengAnalyze_dev',
         'HOST': 'localhost',
-        'PORT': 3306,
+        'PORT': 22799,
         'USER': 'root',
         'PASSWORD': '123456'
     },
-    # 'db01': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': os.path.join(BASE_DIR, 'db_01'),
-    # },
+    'db01': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'yishengAnalyze_pro',
+        'HOST': 'localhost',
+        'PORT': 22799,
+        'USER': 'root',
+        'PASSWORD': '123456'
+    },
     # 'db02': {
     #     'ENGINE': 'django.db.backends.sqlite3',
     #     'NAME': os.path.join(BASE_DIR, 'db_02'),
@@ -116,18 +122,19 @@ DATABASES = {
 # 在models中的class Meta:中指定app_label
 # app_label = "app02"
 # 配置数据库路由
-# DATABASE_ROUTERS = ['yishengAnalyze.database_router.DatabaseAppsRouter']
+DATABASE_ROUTERS = ['yishengAnalyze.database_router.DatabaseAppsRouter']
 # 设置APP对应的数据库路由表
-# DATABASE_APPS_MAPPING = {
-#     # example:
-#     # 'app_name':'database_name',
-#     'app02': 'db02',
-#     'app01': 'db01',
-#     'admin': 'db01',
-#     'auth':  'db01',
-#     'contenttypes': 'db01',
-#     'sessions': 'db01',
-# }
+DATABASE_APPS_MAPPING = {
+    #     # example:
+    #     # 'app_name':'database_name',
+    #     'app02': 'db02',
+    #     'app01': 'db01',
+    #     'admin': 'db01',
+    #     'auth':  'db01',
+    #     'contenttypes': 'db01',
+    #     'sessions': 'db01',
+    'yiShengUser': 'db01'
+}
 # migrate  --database=db01
 
 # **********************缓存设置***************************
@@ -204,3 +211,10 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+import datetime
+#token有效期
+JWT_AUTH = {
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=1),
+    'JWT_RESPONSE_PAYLOAD_HANDLER': 'utils.ResponsePayloadHanderUtil.jwt_response_payload_handler'
+}

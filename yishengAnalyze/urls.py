@@ -18,6 +18,7 @@ from django.views.generic import RedirectView
 import xadmin
 from django.views.generic import TemplateView
 from rest_framework.authtoken.views import obtain_auth_token
+from rest_framework_jwt.views import obtain_jwt_token, verify_jwt_token, refresh_jwt_token
 urlpatterns = [
     url('^admin/', xadmin.site.urls),
     # url('^$', RedirectView.as_view(url='/admin'), name='login'),
@@ -33,5 +34,7 @@ urlpatterns = [
     url(r'^roleMenu/', include('groupMenu.urls')),
     url(r'^userRole/', include('group.urls')),
     url(r'^constant/', include('constant.urls')),
-    url(r'^permissions/', include('permission.urls'))
+    url(r'^permissions/', include('permission.urls')),
+    url(r'^api/v1/login/$', obtain_jwt_token, name='APILogin'),
+    url(r'^yiShengUser/', include('yiShengUser.urls'))
 ]

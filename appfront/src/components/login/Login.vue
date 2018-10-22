@@ -59,7 +59,6 @@
     methods:{
       check(formName){
         let that = this;
-
         that.$refs[formName].validate((valid) =>{
           if(valid){
             let params = {username: that.account.name, password: that.account.password};
