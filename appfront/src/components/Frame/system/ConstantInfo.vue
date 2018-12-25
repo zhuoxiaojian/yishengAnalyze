@@ -87,7 +87,7 @@
           id: null,
           name: '',
           value: '',
-          remark: false,
+          remark: '',
         },
         rules:{
           name:[
