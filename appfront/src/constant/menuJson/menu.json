@@ -39,6 +39,20 @@
     "iconCls": null,
     "is_parent": false,
     "parent_code": "SystemPage"
+  }, {
+    "name": "权限管理",
+    "path": "/appfront/System/PermissionInfo",
+    "menuCode": "PermissionPage",
+    "iconCls": null,
+    "is_parent": false,
+    "parent_code": "SystemPage"
+  }, {
+    "name": "实体管理",
+    "path": "/appfront/System/ContentTypeInfo",
+    "menuCode": "ContentTypePage",
+    "iconCls": null,
+    "is_parent": false,
+    "parent_code": "SystemPage"
   }]
 }, {
   "name": "后台管理",

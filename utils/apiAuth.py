@@ -18,8 +18,8 @@ class TokenAuth(BaseAuthentication):
         http_token = request._request.META.get("HTTP_AUTHORIZATION")
         if not http_token:
             raise exceptions.AuthenticationFailed('缺少token')
-        # if checkKey(http_token) == False:
-        #     raise exceptions.AuthenticationFailed('认证失败')
+        if checkKey(http_token) is False:
+            raise exceptions.AuthenticationFailed('认证失败')
         token_obj = SystemToken.objects.filter(token=http_token).first()
         # del request.session['user_session']
         # 验证失败

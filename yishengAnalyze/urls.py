@@ -27,6 +27,8 @@ urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name="index.html")),
     url(r'^appfront/', TemplateView.as_view(template_name="index.html")),
     url(r'^api/token', obtain_auth_token, name='api_token'),
+
+    # 系统管理API
     url(r'^menu/', include('menu.urls')),
     url(r'^user/', include('users.urls')),
     url(r'^role/', include('group.urls')),
@@ -35,6 +37,8 @@ urlpatterns = [
     url(r'^userRole/', include('group.urls')),
     url(r'^constant/', include('constant.urls')),
     url(r'^permissions/', include('permission.urls')),
+    url(r'^contentType/', include('contentType.urls')),
+    #
     url(r'^api/v1/login/$', obtain_jwt_token, name='APILogin'),
     url(r'^yiShengUser/', include('yiShengUser.urls'))
 ]

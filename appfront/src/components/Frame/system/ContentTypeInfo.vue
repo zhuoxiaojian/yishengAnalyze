@@ -1,10 +1,10 @@
 <template>
-  <div class="constant-info">
+  <div class="content-type-info">
     <el-col :span="24" class="warp-main" v-loading="loading" element-loading-text="拼命加载中">
       <el-col :span="24" class="toolbar" style="padding-bottom: 0;">
         <el-form :inline="true" :model="filters">
           <el-form-item>
-            <el-input v-model="filters.name" placeholder="请输入名称" auto-complete="off" @keyup.enter.native="handleSearch" ><i slot="prefix" class="el-input__icon el-icon-search"></i></el-input>
+            <el-input v-model="filters.name" placeholder="请输入实体" auto-complete="off" @keyup.enter.native="handleSearch" ><i slot="prefix" class="el-input__icon el-icon-search"></i></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" size="medium" v-on:click="handleSearch">查询</el-button>
@@ -17,9 +17,8 @@
       <!--表格数据-->
       <el-table :data="tableData" border style="width: 100%" tooltip-effect="dark" higlight-current-row>
         <el-table-column property="id" label="ID"></el-table-column>
-        <el-table-column property="name" label="键名"  sortable></el-table-column>
-        <el-table-column property="value" label="键值" ></el-table-column>
-        <el-table-column property="remark" label="备注"  :show-overflow-tooltip="true" ></el-table-column>
+        <el-table-column property="model" label="实体" ></el-table-column>
+        <el-table-column property="app_label" label="名称"  sortable></el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
             <el-button
@@ -41,18 +40,15 @@
     </el-col>
 
     <el-dialog :title="dialogTitle" :close-on-press-escape="false" :close-on-click-modal="false" :visible.sync="dialogAddVisible" :before-close="handleClose">
-      <el-form :model="constantForm" ref="constantForm" :rules="rules">
+      <el-form :model="contentTypeForm" ref="contentTypeForm" :rules="rules">
         <el-form-item label="ID：" :label-width="formLabelWidth" prop="id" hidden="true">
-          <el-input v-model="constantForm.id" placeholder="ID" auto-complete="off"></el-input>
+          <el-input v-model="contentTypeForm.id" placeholder="ID" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="键名：" :label-width="formLabelWidth" prop="name">
-          <el-input v-model="constantForm.name" placeholder="键名" auto-complete="off"></el-input>
+        <el-form-item label="名称：" :label-width="formLabelWidth" prop="app_label">
+          <el-input v-model="contentTypeForm.app_label" placeholder="名称" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="键值：" :label-width="formLabelWidth" prop="value">
-          <el-input v-model="constantForm.value" placeholder="键值"  auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="备注：" :label-width="formLabelWidth" prop="remark">
-          <el-input v-model="constantForm.remark" placeholder="备注"  auto-complete="off"></el-input>
+        <el-form-item label="实体：" :label-width="formLabelWidth" prop="model">
+          <el-input v-model="contentTypeForm.model" placeholder="键值"  auto-complete="off"></el-input>
         </el-form-item>
 
       </el-form>
@@ -71,7 +67,7 @@
   import hasPermission from "../../../utils/util";
   export default {
     components: {ElRadio},
-    name: 'constant-info',
+    name: 'content-type-info',
     inject: ['reload'],
     data: function(){
       return {
@@ -83,25 +79,27 @@
         pageSize: 10,
         tableData: [],
         dialogTitle: null,
-        constantForm: {
+        contentTypeForm: {
           id: null,
-          name: '',
-          value: '',
-          remark: false,
+          app_label: '',
+          model: '',
         },
         rules:{
-          name:[
-            {required: true, trigger: 'blur', validator:this.validateConstantName}
+          app_label:[
+            {required: true, trigger: 'blur', message:'请输入app_label'}
           ],
+          model:[
+            {required: true, trigger: 'blur', message: '请输入实体'}
+          ]
         },
         formLabelWidth: '120px',
         dialogAddVisible: false,
         filters: {
           name: ''
         },
-        hasAddPermission: hasPermission('add_constant'),
-        hasDetailPermission: hasPermission('change_constant'),
-        hasDeletePermission: hasPermission('delete_constant'),
+        hasAddPermission: hasPermission('add_contenttype'),
+        hasDetailPermission: hasPermission('change_contenttype'),
+        hasDeletePermission: hasPermission('delete_contenttype'),
       };
     },
     mounted(){
@@ -114,29 +112,10 @@
 
     },
     methods: {
-      //校验用户名
-      validateConstantName:function (rule, value, callback) {
-        if(!value){
-          return callback(new Error('请输入键名'));
-        }
-        let checkConstantNameUrl = baseHost + '/constant/checkConstantName/';
-        let checkParams = {constantId:this.constantForm.id, constantName: value};
-        axios.get(checkConstantNameUrl, {params: checkParams}).then((response)=>{
-          if(response.data.code == 300){
-            return callback(new Error(response.data.message));
-          }else {
-            return callback();
-          }
-        }).catch(()=>{
-          return callback();
-        });
-
-      },
-
-      initTable:function(current_page, page_size, constantName){
+      initTable:function(current_page, page_size, contentTypeName){
         let that = this;
         let http_token = that.$store.state.token;
-        axios.get(baseHost+'/constant/constant/', {params:{page:current_page, page_size: page_size, constantName: constantName}, headers:{ 'Authorization':http_token}}).then((response)=>{
+        axios.get(baseHost+'/contentType/contentType/', {params:{page:current_page, page_size: page_size, contentTypeName: contentTypeName}, headers:{ 'Authorization':http_token}}).then((response)=>{
           that.tableData = response.data.results;
           that.total = response.data.count;
         }).catch(function () {
@@ -150,19 +129,19 @@
       handleDetail(index, row) {
         this.dialogTitle = '详情';
         this.dialogAddVisible = true;
-        this.constantForm = row;
+        this.contentTypeForm = row;
 
       },
       handleDelete(index, row) {
         let that = this;
-        let deleteConstantInfoUrl = baseHost + '/constant/constantdetail/'+row.id+'/';
+        let deleteContentTypeInfoUrl = baseHost + '/contentType/contentTypeDetail/'+row.id+'/';
         let http_token = that.$store.state.token;
         that.$confirm("此操作将永久删除该记录, 是否继续?", "提示", {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'error'
         }).then(()=>{
-          axios.delete(deleteConstantInfoUrl,  {headers:{'Authorization':http_token}}).then(()=>{
+          axios.delete(deleteContentTypeInfoUrl,  {headers:{'Authorization':http_token}}).then(()=>{
             that.$message({
               type: 'success',
               message: '删除成功!'
@@ -197,27 +176,27 @@
       showAddDialog(){
         this.dialogTitle = '新增';
         this.dialogAddVisible = true;
-        this.constantForm = {};
+        this.contentTypeForm = {};
       },
       handleClose(done){  //关闭弹窗
         done();
       },
       cancleSubmit:function () {
         this.dialogAddVisible = false;
-        this.constantForm = {};
+        this.contentTypeForm = {};
       },
       trueSubmit:function () {
         let that = this;
-        let addConstantInfoUrl = baseHost + '/constant/constant/';
-        let editConstantInfoUrl = baseHost + '/constant/constantdetail/'+that.constantForm.id+'/';
+        let addContentTypeInfoUrl = baseHost + '/contentType/contentType/';
+        let editContentTypeInfoUrl = baseHost + '/contentType/contentTypeDetail/'+that.contentTypeForm.id+'/';
         let http_token = that.$store.state.token;
         axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
-        let handleParams = that.constantForm;
-        that.$refs['constantForm'].validate((valid) => {
+        let handleParams = that.contentTypeForm;
+        that.$refs['contentTypeForm'].validate((valid) => {
           if (valid) {
-            if(that.constantForm.id != null && that.constantForm.id != ''){
+            if(that.contentTypeForm.id != null && that.contentTypeForm.id != ''){
               let editParams = handleParams;
-              axios.put(editConstantInfoUrl, JSON.stringify(editParams),{
+              axios.put(editContentTypeInfoUrl, JSON.stringify(editParams),{
                 headers: {
                   'Content-Type': 'application/json;charset=UTF-8',
                   'Authorization': http_token
@@ -239,7 +218,7 @@
             }else{
               let addParams = handleParams;
               delete addParams['id'];
-              axios.post(addConstantInfoUrl, JSON.stringify(addParams), {
+              axios.post(addContentTypeInfoUrl, JSON.stringify(addParams), {
                 headers: {
                   'Content-Type': 'application/json;charset=UTF-8',
                   'Authorization': http_token

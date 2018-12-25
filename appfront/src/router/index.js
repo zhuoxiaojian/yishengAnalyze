@@ -87,6 +87,22 @@ export default new Router({
           menuCode: 'ConstantPage',
         },
         {
+          path: '/appfront/System/PermissionInfo',
+          component: resolve=> require(['@/components/Frame/System/PermissionInfo'], resolve),
+          name: '权限管理',
+          menuShow: true,
+          meta: {requireAuth: true,},
+          menuCode: 'PermissionPage',
+        },
+        {
+          path: '/appfront/System/ContentTypeInfo',
+          component: resolve=> require(['@/components/Frame/System/ContentTypeInfo'], resolve),
+          name: '实体管理',
+          menuShow: true,
+          meta: {requireAuth: true,},
+          menuCode: 'ContentTypePage',
+        },
+        {
           path: '/appfront/Back',
           component: resolve=> require(['@/components/Frame/Back'], resolve),
           name: '后台管理',
