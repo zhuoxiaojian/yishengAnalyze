@@ -18,13 +18,13 @@
       <el-table :data="tableData" border style="width: 100%" tooltip-effect="dark" higlight-current-row>
         <el-table-column property="id" label="ID"></el-table-column>
         <el-table-column property="username" label="用户名"  sortable></el-table-column>
-        <el-table-column property="password" label="密码"  :show-overflow-tooltip="true" ></el-table-column>
+        <el-table-column property="password" label="密码"  :show-overflow-tooltip="true" v-if="show"></el-table-column>
         <el-table-column property="is_superuser" label="超级用户" :formatter="formatterIsSupersuer" v-if="show"></el-table-column>
         <el-table-column property="is_staff" label="职员状态" :formatter="formatterIsStaff" v-if="show"></el-table-column>
         <el-table-column property="is_active" label="是否有效" :formatter="formatterIsActive" v-if="show"></el-table-column>
-        <el-table-column property="phone" label="手机"></el-table-column>
-        <el-table-column property="qq" label="QQ"></el-table-column>
-        <el-table-column property="email" label="邮箱"></el-table-column>
+        <el-table-column property="phone" label="手机" v-if="show"></el-table-column>
+        <el-table-column property="qq" label="QQ" v-if="show"></el-table-column>
+        <el-table-column property="email" label="邮箱" v-if="show"></el-table-column>
         <el-table-column property="first_name" label="姓氏"></el-table-column>
         <el-table-column property="last_name" label="名字"></el-table-column>
         <el-table-column label="操作">
