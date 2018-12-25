@@ -10,7 +10,7 @@
             <el-button type="primary" size="medium" v-on:click="handleSearch">查询</el-button>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" size="medium" @click="showAddDialog">新增</el-button>
+            <el-button type="primary" size="medium" @click="showAddDialog" :disabled="hasAddPermission">新增</el-button>
           </el-form-item>
         </el-form>
       </el-col>
@@ -31,11 +31,11 @@
           <template slot-scope="scope">
             <el-button
               size="mini"
-              @click="handleDetail(scope.$index, scope.row)">详情</el-button>
+              @click="handleDetail(scope.$index, scope.row)" :disabled="hasDetailPermission">详情</el-button>
             <el-button
               size="mini"
               type="danger"
-              @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+              @click="handleDelete(scope.$index, scope.row)" :disabled="hasDeletePermission">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -114,6 +114,7 @@
   import baseHost from '../../../api/baseHost'
   import ElRadio from "element-ui/packages/radio/src/radio";
   import ElButton from "element-ui/packages/button/src/button";
+  import hasPermission from '../../../utils/util'
   export default {
     components: {
       ElButton,
@@ -170,6 +171,9 @@
           username: ''
         },
         radio:'',
+        hasAddPermission: hasPermission('add_userprofile'),
+        hasDetailPermission: hasPermission('change_userprofile'),
+        hasDeletePermission: hasPermission('delete_userprofile'),
       };
     },
     mounted(){
@@ -186,7 +190,7 @@
       // console.log(this.$route.query.menuCode);
     },
     created(){
-      this.initTable(this.currentPage, this.pageSize, null);
+      this.initTable(this.currentPage, this.pageSize, this.filters.username);
     },
     watch: {
 
@@ -268,7 +272,7 @@
               type: 'success',
               message: '删除成功!'
             });
-            that.initTable(that.currentPage, that.pageSize, null);
+            that.initTable(that.currentPage, that.pageSize, this.filters.username);
           }).catch(()=>{
             that.$message({
               type: 'fail',
@@ -288,12 +292,12 @@
         let that = this;
         that.pageSize = val;
         that.currentPage = 1;
-        that.initTable(that.currentPage, that.pageSize, null);
+        that.initTable(that.currentPage, that.pageSize, this.filters.username);
       },
       handleCurrentChange(val){
         let that = this;
         that.currentPage = val;
-        that.initTable(that.currentPage, that.pageSize, null);
+        that.initTable(that.currentPage, that.pageSize, this.filters.username);
       },
       showAddDialog(){
         this.dialogTitle = '新增';
@@ -365,7 +369,7 @@
                      type: 'success',
                      message: '修改成功!'
                    });
-                   that.initTable(that.currentPage, that.pageSize, null);
+                   that.initTable(that.currentPage, that.pageSize, this.filters.username);
                  }).catch(()=>{
                    that.dialogAddVisible = false;
                    this.$message({
@@ -388,7 +392,7 @@
                     type: 'success',
                     message: '添加成功!'
                   });
-                  that.initTable(that.currentPage, that.pageSize, null);
+                  that.initTable(that.currentPage, that.pageSize, this.filters.username);
 
                 }).catch(()=>{
                   that.dialogAddVisible = false;

@@ -1,7 +1,7 @@
 <template>
   <div>
-    <el-button type="primary" size="medium" @click="addEquipment">新增</el-button>　
-    <el-button type="primary" size="medium" @click="oneKeyToAdd">一键添加</el-button>
+    <el-button type="primary" size="medium" @click="addEquipment" :disabled="hasAddPermission">新增</el-button>　
+    <el-button type="primary" size="medium" @click="oneKeyToAdd" :disabled="hasAddPermission">一键添加</el-button>
   <el-table
     :data="data"
     border
@@ -21,13 +21,15 @@
     </el-table-column>
     <el-table-column label="操作" v-if="treeType === 'normal'" width="260">
       <template slot-scope="scope">
-        <el-button type="button" class="el-button el-button--default el-button--small" @click="handleEdit(scope.row)" >
+        <el-button type="button" class="el-button el-button--default el-button--small" @click="handleEdit(scope.row)"
+          :disabled="hasDetailPermission">
             编辑
         </el-button>
         <el-button
           size="small"
           type="danger"
-          @click="handleDelete(scope.row)">
+          @click="handleDelete(scope.row)"
+          :disabled="hasDeletePermission">
           删除
         </el-button>
       </template>
@@ -118,6 +120,7 @@
     import ElInput from "element-ui/packages/input/src/input";
     import axios from 'axios'
     import baseHost from '../../api/baseHost'
+    import hasPermission from '../../utils/util'
     export default {
       inject: ['reload'],
       components: {
@@ -212,6 +215,9 @@
           dialogStatus: "",
           RouteMenuCodeList: [],
           dialogTipVisible:false,
+          hasAddPermission: hasPermission('add_menu'),
+          hasDetailPermission: hasPermission('change_menu'),
+          hasDeletePermission: hasPermission('delete_menu'),
         }
       },
       computed: {

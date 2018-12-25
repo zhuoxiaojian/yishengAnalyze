@@ -103,6 +103,7 @@ class LoginView(APIView):
                         cacheLoginUserInfo['currentUserRoleName'] = user_role_name
                         user_role_permission = list(current_user_set.get_group_permissions())
                         cacheLoginUserInfo['currentUserRolePermissions'] = user_role_permission
+                        user_dict['currentUserRolePermissions'] = user_role_permission
                 else:
                     if user.is_superuser:
                         user_role_name = '超级管理员'
@@ -125,6 +126,7 @@ class LoginView(APIView):
             else:
                 return JsonResponse({'code': '1', "userInfo": None, "message": "密码错误", "user_token": None, "user_role": None})
         except Exception as e:
+            print(e)
             return JsonResponse({'code': '1', "userInfo": None, "message": "用户不存在", "user_token": None, "user_role": None})
 
         return JsonResponse({"code": '0', "msg": "登录成功"})

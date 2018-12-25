@@ -10,7 +10,7 @@
             <el-button type="primary" size="medium" v-on:click="handleSearch">查询</el-button>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" size="medium" @click="showAddDialog">新增</el-button>
+            <el-button type="primary" size="medium" @click="showAddDialog" :disabled="hasAddPermission">新增</el-button>
           </el-form-item>
         </el-form>
       </el-col>
@@ -23,11 +23,11 @@
           <template slot-scope="scope">
             <el-button
               size="mini"
-              @click="handleDetail(scope.$index, scope.row)">详情</el-button>
+              @click="handleDetail(scope.$index, scope.row)" :disabled="hasDetailPermission">详情</el-button>
             <el-button
               size="mini"
               type="danger"
-              @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+              @click="handleDelete(scope.$index, scope.row)" :disabled="hasDeletePermission">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -74,7 +74,7 @@
       <el-form>
         <el-form-item label="功能权限：" :label-width="formLabelWidth">
           <el-select v-model="choosePermissions" multiple coolapse-tags placeholder="请选择" style="width: 100%; border-radius: 20px;" @change="selectAllPermission">
-            <el-option v-for="item in selectPermissionOptions" :key="item.id" :label="item.name" :value="item.id"></el-option>
+            <el-option v-for="item in selectPermissionOptions" :key="item.id" :label="item.codename" :value="item.id"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
@@ -111,6 +111,7 @@
   import ElForm from "element-ui/packages/form/src/form";
   import ElTree from "element-ui/packages/tree/src/tree";
   import ElOption from "element-ui/packages/select/src/option";
+  import hasPermission from '../../../utils/util'
   export default {
     components: {
       ElOption,
@@ -159,7 +160,10 @@
         departName: null,
         resourceCheckedKey: [],
         choosePermissions:[],
-        selectPermissionOptions: []
+        selectPermissionOptions: [],
+        hasAddPermission: hasPermission('add_group'),
+        hasDetailPermission: hasPermission('change_group'),
+        hasDeletePermission: hasPermission('delete_group'),
       };
     },
     mounted(){
@@ -189,7 +193,7 @@
 
     },
     created(){
-      this.initTable(this.currentPage, this.pageSize, null);
+      this.initTable(this.currentPage, this.pageSize, this.filters.name);
     },
     methods: {
       validateRoleName:function (rule, value, callback) {
@@ -267,7 +271,7 @@
               type: 'success',
               message: '删除成功!'
             });
-            that.initTable(that.currentPage, that.pageSize, null);
+            that.initTable(that.currentPage, that.pageSize, this.filters.name);
           }).catch(()=>{
             this.$message({
               type: 'fail',
@@ -286,12 +290,12 @@
         let that = this;
         that.pageSize = val;
         that.currentPage = 1;
-        that.initTable(that.currentPage, that.pageSize, null);
+        that.initTable(that.currentPage, that.pageSize, this.filters.name);
       },
       handleCurrentChange(val){
         let that = this;
         that.currentPage = val;
-        that.initTable(that.currentPage, that.pageSize, null);
+        that.initTable(that.currentPage, that.pageSize, this.filters.name);
       },
       showAddDialog(){
         let that = this;
@@ -388,14 +392,14 @@
                     message: '修改成功!'
                   });
                   // that.reload();
-                  that.initTable(that.currentPage, that.pageSize, null);
+                  that.initTable(that.currentPage, that.pageSize, this.filters.name);
                 }).catch(() => {
                 that.dialogAddVisible = false;
                 that.$message({
                   type: 'fail',
                   message: '修改失败!'
                 });
-                that.initTable(that.currentPage, that.pageSize, null);
+                that.initTable(that.currentPage, that.pageSize, this.filters.name);
               })
 
             } else {
@@ -414,7 +418,7 @@
                     type: 'success',
                     message: '添加成功!'
                   });
-                  that.initTable(that.currentPage, that.pageSize, null);
+                  that.initTable(that.currentPage, that.pageSize, this.filters.name);
                 }).catch(() => {
                 that.dialogAddVisible = false;
                 that.$message({

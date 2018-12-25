@@ -21,7 +21,7 @@ def getAllPermission(request):
     # 验证失败
     if not token_obj:
         return JsonResponse(response)
-    result_set = Permission.objects.all().values('id', 'name')
+    result_set = Permission.objects.all().values('id', 'codename')
     result_json = json.dumps(list(result_set))
     response['permissionJson'] = result_json
     return JsonResponse(response)
