@@ -8,19 +8,24 @@
  * 判断是否有权限，有权限返回false，无权限返回true
  */
 export default function hasOpeartionPermission(operationName) {
-  let user_permission = JSON.parse(localStorage.getItem('access-user')).currentUserRolePermissions;
+  let user_permission = JSON.parse(localStorage.getItem('access-user'));
   let user_role = localStorage.getItem('access-user-roleName');
   if("超级管理员" == user_role){
     return false;
-  }else {
-    if(null != user_permission){
-      let str = user_permission.toString();
-      if(str.indexOf(operationName) > -1){
-        return false;
+  }else if(null != user_permission){
+    if(user_permission.hasOwnProperty('currentUserRolePermissions')){
+      let user_all_permission = user_permission.currentUserRolePermissions;
+      if(null != user_all_permission){
+        let str = user_all_permission.toString();
+        if(str.indexOf(operationName) > -1){
+          return false;
+        }else {
+          return true;
+        }
       }else {
         return true;
       }
-    }else {
+    }else{
       return true;
     }
   }
