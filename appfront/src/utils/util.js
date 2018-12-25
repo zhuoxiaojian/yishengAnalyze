@@ -28,5 +28,7 @@ export default function hasOpeartionPermission(operationName) {
     }else{
       return true;
     }
+  }else {
+    return true;
   }
 }
