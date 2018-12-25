@@ -2,8 +2,8 @@ from django.db import models
 
 # Create your models here.
 class Constant(models.Model):
-    name = models.CharField(max_length=255, verbose_name='constant_key', null=False, blank=False, unique=True)
-    value = models.CharField(max_length=255, verbose_name='constant_value', null=True, blank=True)
+    name = models.CharField(max_length=255, verbose_name='键名', null=False, blank=False, unique=True)
+    value = models.CharField(max_length=255, verbose_name='键值', null=True, blank=True)
     remark = models.CharField(max_length=255, verbose_name='备注', null=True, blank=True)
 
     class Meta:
@@ -12,4 +12,4 @@ class Constant(models.Model):
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return self.key
+        return self.name
