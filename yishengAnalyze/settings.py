@@ -27,7 +27,7 @@ SECRET_KEY = '78aoyg-89pvti7)gu()7nz+*d!(p9d=fegopuzs8^#83kj*rnt'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1', '192.168.3.33']
 #权限配置
 AUTH_USER_MODEL = 'users.UserProfile'
 AUTHENTICATION_BACKENDS = (
