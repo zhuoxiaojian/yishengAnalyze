@@ -91,10 +91,12 @@
         </el-form-item>
 
         <el-form-item label="最后登录："  :label-width="formLabelWidth" prop="last_login">
-            <!--value-format="yyyy-MM-dd HH:mm:dd"-->
+
             <el-date-picker
               v-model="form.last_login"
               type="datetime"
+              value-format="yyyy-MM-dd HH:mm:ss"
+              format="yyyy-MM-dd HH:mm:ss"
               placeholder="选择日期">
             </el-date-picker>
 
@@ -244,7 +246,6 @@
         this.dialogAddVisible = true;
         this.form = row;
         this.form.last_login = this.dateFormatter(row.last_login, true);
-        console.log(this.form.last_login);
         this.isOnlyRead = true;
         let getUserOwnRoleUrl = baseHost + '/userRole/getUserOwnRole/';
         let http_token = this.$store.state.token;
@@ -413,8 +414,9 @@
           }
         });
       },
-      dateFormatter:function (str) {
-        var hasTime = arguments[1] != false ? true : false;//可传第二个参数false，返回yyyy-MM-dd
+      dateFormatter:function (str, flag) {
+        var hasTime = flag != false ? true : false;//可传第二个参数false，返回yyyy-MM-dd
+        console.log(typeof str);
         var d = new Date(str);
         var year = d.getFullYear();
         var month = (d.getMonth()+1)<10 ? '0'+(d.getMonth()+1) : (d.getMonth()+1);
