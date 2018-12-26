@@ -11,6 +11,6 @@ from django.conf.urls import url
 urlpatterns = [
     url(r'^depart/$', departAPIViews.DepartApiView.as_view()),
     url(r'^departdetail/(?P<pk>[0-9]+)/$', departAPIViews.DepartDetail.as_view()),
-    url(r'^initDepartTree', departView.initDepartTreeAPIView.as_view(), name='initDepartTree'),
+    url(r'^initDepartTree', departView.initDepartTreeAPIView.as_view()),
     url(r'^checkDepartCode', departView.checkDepartCode, name='checkDepartCode'),
 ]
