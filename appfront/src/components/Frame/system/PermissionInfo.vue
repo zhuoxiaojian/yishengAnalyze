@@ -207,6 +207,11 @@
       cancleSubmit:function () {
         this.dialogAddVisible = false;
         this.permissionForm = {};
+        //清除验证
+        let that = this;
+        setTimeout(function () {
+          that.$refs['permissionForm'].clearValidate();
+        }, 100);
       },
       trueSubmit:function () {
         let that = this;

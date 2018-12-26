@@ -336,6 +336,11 @@
         this.form = {};
         this.userRole = null;
         this.isOnlyRead = false;
+        //清除验证
+        let that = this;
+        setTimeout(function () {
+          that.$refs['form'].clearValidate();
+        }, 100);
       },
       trueSubmit:function () {
         let that = this;

@@ -184,6 +184,11 @@
       cancleSubmit:function () {
         this.dialogAddVisible = false;
         this.contentTypeForm = {};
+        //清除验证
+        let that = this;
+        setTimeout(function () {
+          that.$refs['contentTypeForm'].clearValidate();
+        }, 100);
       },
       trueSubmit:function () {
         let that = this;

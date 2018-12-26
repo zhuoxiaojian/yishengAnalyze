@@ -198,11 +198,6 @@
         this.dialogTitle = '新增';
         this.dialogAddVisible = true;
         this.constantForm = {};
-        //清除验证
-        let that = this;
-        setTimeout(function () {
-          that.$refs['constantForm'].clearValidate();
-        }, 200);
       },
       handleClose(done){  //关闭弹窗
         done();
@@ -210,6 +205,11 @@
       cancleSubmit:function () {
         this.dialogAddVisible = false;
         this.constantForm = {};
+        //清除验证
+        let that = this;
+        setTimeout(function () {
+          that.$refs['constantForm'].clearValidate();
+        }, 100);
       },
       trueSubmit:function () {
         let that = this;

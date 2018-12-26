@@ -340,6 +340,10 @@
         that.departName=null;
         that.addCheckedTree();
         that.choosePermissions = [];
+        //清除验证
+        setTimeout(function () {
+          that.$refs['form'].clearValidate();
+        }, 100);
       },
       editFormSubmit(){
         let that = this;
