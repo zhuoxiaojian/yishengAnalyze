@@ -416,7 +416,7 @@
       },
       dateFormatter:function (str, flag) {
         var hasTime = flag != false ? true : false;//可传第二个参数false，返回yyyy-MM-dd
-        console.log(typeof str);
+        // console.log(typeof str);
         var d = new Date(str);
         var year = d.getFullYear();
         var month = (d.getMonth()+1)<10 ? '0'+(d.getMonth()+1) : (d.getMonth()+1);
