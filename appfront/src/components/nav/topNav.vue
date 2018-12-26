@@ -56,7 +56,7 @@
     </el-form>
     <div slot="footer" class="dialog-footer">
        <el-button @click="closeShowUserInfoDialogDialog">取 消</el-button>
-       <el-button type="primary" @click="submitUserInfoDialog">确 定</el-button>
+       <el-button type="primary" @click="submitUserInfoDialog" :disabled="hasDetailPermission">确 定</el-button>
      </div>
   </el-dialog>
 
@@ -70,13 +70,13 @@
           <el-input v-model="passwordInfoForm.id"></el-input>
         </el-form-item>
         <el-form-item prop="oldPassword" :label-width="formLabelWidth" label="旧密码：">
-          <el-input v-model="passwordInfoForm.oldPassword" auto-complete="off" placeholder="请输入旧密码"></el-input>
+          <el-input v-model="passwordInfoForm.oldPassword" auto-complete="off" placeholder="请输入旧密码" type="password"></el-input>
         </el-form-item>
         <el-form-item prop="newPassword" :label-width="formLabelWidth" label="新密码：">
-          <el-input v-model="passwordInfoForm.newPassword" auto-complete="off" placeholder="请输入新密码"></el-input>
+          <el-input v-model="passwordInfoForm.newPassword" auto-complete="off" placeholder="请输入新密码" type="password"></el-input>
         </el-form-item>
         <el-form-item prop="firstPassword" :label-width="formLabelWidth" label="新密码：">
-          <el-input v-model="passwordInfoForm.firstPassword" auto-complete="off" placeholder="请重新输入新密码"></el-input>
+          <el-input v-model="passwordInfoForm.firstPassword" auto-complete="off" placeholder="请重新输入新密码" type="password"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -94,6 +94,7 @@
   import baseHost from '../../api/baseHost'
   import ElFormItem from "element-ui/packages/form/src/form-item";
   import ElInput from "element-ui/packages/input/src/input";
+  import hasPermission from "../../utils/util"
   export default {
     components: {
       ElInput,
@@ -134,10 +135,11 @@
           firstPassword:''
         },
         passwordInfoFormRules:{
-          oldPassword:[{required:true, message:'请输入旧密码', trigger:'blur'}],
+          oldPassword:[{required:true, trigger:'blur', validator: this.validateOldPassword}],
           newPassword:[{required:true, message:'请输入新密码', trigger:'blur'}],
           firstPassword:[{required:true, message:'请重新输入新密码', trigger:'blur'}]
-        }
+        },
+        hasDetailPermission: hasPermission('change_userprofile'),
       }
     },
     mounted() {
@@ -172,6 +174,31 @@
 
     },
     methods: {
+      //校验旧密码是否正确
+      validateOldPassword:function (rule, value, callback) {
+        let that = this;
+        let checkUserPasswordUrl = baseHost + '/user/checkOrChangeUserPassword/'+ that.passwordInfoForm.id+'/';
+        let oldPasswordParam = {oldPassword: value};
+        let http_token = that.$store.state.token;
+        axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
+        if(!value){
+          return callback(new Error('请输入旧密码'));
+        }else {
+            axios.get(checkUserPasswordUrl,
+              {
+                params:oldPasswordParam,
+                headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                'Authorization': http_token
+              }}).then((response)=>{
+                  if(response.data.code != 200){
+                    return callback(new Error(response.data.message));
+                  }
+            }).catch(()=>{
+                return callback();
+            });
+        }
+      },
       jumpTo (url){
         this.$router.push(url); //用go刷新
       },
@@ -199,7 +226,12 @@
       showUserInfoDialog:function () {
         this.showUserInfoDialogVisible = true;
         let user = localStorage.getItem('access-user');
-        this.userInfoForm = JSON.parse(user);
+        if(null == user){
+          this.$router.push('/');
+        }else{
+          this.userInfoForm = JSON.parse(user);
+        }
+
       },
       closeShowUserInfoDialogDialog:function () {
         this.showUserInfoDialogVisible = false;
@@ -232,13 +264,47 @@
       showPassInfoDialog:function () {
         this.showPasswordDialogVisible = true;
         let user = localStorage.getItem('access-user');
-        this.passwordInfoForm.id = JSON.parse(user).id;
+        if(null != user){
+          this.passwordInfoForm.id = JSON.parse(user).id;
+        }else {
+          this.$router.push('/');
+        }
       },
       closeShowPasswordInfoDialogDialog:function(){
-        this.showPasswordDialogVisible = false;
+        let that = this;
+        that.showPasswordDialogVisible = false;
+        setTimeout(function () {
+          that.$refs['passwordInfoForm'].clearValidate();
+        }, 100);
+        that.passwordInfoForm = {}
       },
       submitPasswordInfoDialog:function () {
-
+        let that = this;
+        let changeUserOwnPasswordUrl = baseHost + '/user/checkOrChangeUserPassword/'+ that.passwordInfoForm.id+'/';
+        let passwordParam = {newPassword: that.passwordInfoForm.newPassword, firstPassword: that.passwordInfoForm.firstPassword};
+        let http_token = that.$store.state.token;
+        axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
+        that.$refs['passwordInfoForm'].validate((valid)=>{
+            if(valid){
+              if(that.passwordInfoForm.newPassword != that.passwordInfoForm.firstPassword){
+                alert('新密码不一致，请重新输入');
+                return;
+              }
+              axios.put(changeUserOwnPasswordUrl, JSON.stringify(passwordParam), {
+                headers: {
+                  'Content-Type': 'application/json;charset=UTF-8',
+                  'Authorization': http_token
+                }
+              }).then((response)=>{
+                  if(response.data.code == 200){
+                    alert(response.data.message);
+                    that.$router.push('/');
+                  }else{
+                    alert(response.data.message);
+                  }
+              }).catch();
+            }
+          });
       }
 
     }

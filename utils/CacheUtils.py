@@ -14,7 +14,7 @@ def read_from_cache(key):
 
 # write cache
 def write_to_cache(key, value):
-    cache.set(key, value, settings.CUBES_REDIS_TIMEOUT)
+    cache.set(key, value, settings.DAY_REDIS_TIMEOUT)
 
 def checkKey(key):
     return cache.has_key(key)

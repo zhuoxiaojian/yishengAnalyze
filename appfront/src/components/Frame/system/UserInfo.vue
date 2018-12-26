@@ -56,7 +56,7 @@
           <el-input v-model="form.username" placeholder="用户名" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="密码：" :label-width="formLabelWidth" prop="password">
-          <el-input v-model="form.password" placeholder="密码" auto-complete="off" :readonly="isOnlyRead"></el-input>
+          <el-input v-model="form.password" placeholder="密码" type="password" auto-complete="off" :readonly="isOnlyRead" @click.native="changePasswordFunc"></el-input>
         </el-form-item>
         <el-form-item label="状态：" :label-width="formLabelWidth">
           <el-checkbox label="管理员" v-model="form.is_superuser"></el-checkbox>
@@ -107,7 +107,28 @@
         <el-button type="primary" @click.native="trueSubmit">提交</el-button>
       </div>
     </el-dialog>
-
+    <!--修改密码-->
+    <el-dialog
+      title="修改密码"
+      :visible.sync="showUserPasswordDialogVisible"
+      width="30%"
+      @close='closeShowUserPasswordInfoDialog'>
+      <el-form :model="userPasswordInfoForm" ref="userPasswordInfoForm" :rules="userPasswordInfoFormRules">
+        <el-form-item prop="id" :label-width="formLabelWidth" label="ID：" :hidden="true">
+          <el-input v-model="userPasswordInfoForm.id"></el-input>
+        </el-form-item>
+        <el-form-item prop="newPassword" :label-width="formLabelWidth" label="新密码：">
+          <el-input v-model="userPasswordInfoForm.newPassword" auto-complete="off" placeholder="请输入新密码" type="password"></el-input>
+        </el-form-item>
+        <el-form-item prop="firstPassword" :label-width="formLabelWidth" label="新密码：">
+          <el-input v-model="userPasswordInfoForm.firstPassword" auto-complete="off" placeholder="请重新输入新密码" type="password"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="closeShowUserPasswordInfoDialog">取 消</el-button>
+        <el-button type="primary" @click="submitUserPasswordInfoDialog">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -116,14 +137,17 @@
   import ElRadio from "element-ui/packages/radio/src/radio";
   import ElButton from "element-ui/packages/button/src/button";
   import hasPermission from '../../../utils/util'
+  import ElFormItem from "element-ui/packages/form/src/form-item";
   export default {
     components: {
+      ElFormItem,
       ElButton,
       ElRadio},
     name: 'user-info',
     inject: ['reload'],
     data: function(){
       return {
+        showUserPasswordDialogVisible:false,
         show: false,
         loading: false,
         total: 0,
@@ -163,6 +187,15 @@
             {pattern:/^\w+@\w+\.\w+(\.\w+)*$/, message:'邮箱格式错误', trigger:'blur'}
           ]
 
+        },
+        userPasswordInfoForm:{
+          id: '',
+          newPassword:'',
+          firstPassword: ''
+        },
+        userPasswordInfoFormRules:{
+          newPassword:[{required: true, trigger:'blur', message:'请输入密码'}],
+          firstPassword:[{required: true, trigger:'blur', message:'请再次输入密码'}],
         },
         userRole:null,
         roles:[],
@@ -430,6 +463,55 @@
           return [year, month, day].join('-');
         }
       },
+      changePasswordFunc:function () {
+        let that = this;
+        if(that.isOnlyRead){
+          that.showUserPasswordDialogVisible = true;
+          that.userPasswordInfoForm.id = that.form.id;
+        }
+      },
+      closeShowUserPasswordInfoDialog:function () {
+        let that = this;
+        that.showUserPasswordDialogVisible = false;
+        that.userPasswordInfoForm = {}
+        setTimeout(function () {
+          that.$refs['userPasswordInfoForm'].clearValidate();
+        }, 100);
+      },
+      submitUserPasswordInfoDialog:function () {
+        let that = this;
+        let changeUserPasswordUrl = baseHost + '/user/changeUserPassword/'+ that.userPasswordInfoForm.id+'/';
+        let passwordParam = {newPassword: that.userPasswordInfoForm.newPassword, firstPassword: that.userPasswordInfoForm.firstPassword};
+        let http_token = that.$store.state.token;
+        axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
+        that.$refs['userPasswordInfoForm'].validate((valid) => {
+            if(valid){
+                if(that.userPasswordInfoForm.newPassword != that.userPasswordInfoForm.firstPassword){
+                    alert('两次密码不一致');
+                    return;
+                }else {
+                    axios.put(changeUserPasswordUrl, JSON.stringify(passwordParam), {
+                      headers: {
+                        'Content-Type': 'application/json;charset=UTF-8',
+                        'Authorization': http_token
+                      }
+                    }).then((response)=>{
+                        alert(response.data.message);
+                        that.closeShowUserPasswordInfoDialog();
+                        that.cancleSubmit();
+                        that.initTable(that.currentPage, that.pageSize, that.filters.username);
+                    }).catch((response)=>{
+                        alert(response.status);
+                        that.closeShowUserPasswordInfoDialog();
+                        that.cancleSubmit();
+                        that.initTable(that.currentPage, that.pageSize, that.filters.username);
+                    });
+                }
+            }else {
+
+            }
+        });
+      }
     }
   }
 </script>
