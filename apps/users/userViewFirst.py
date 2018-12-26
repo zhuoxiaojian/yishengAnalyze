@@ -117,6 +117,10 @@ class LoginView(APIView):
                 user_dict.pop('date_joined')
                 user_dict.pop('groups')
                 user_dict.pop('user_permissions')
+                try:
+                    UserProfile.objects.filter(id=user.id).update(last_login=datetime.datetime.now())
+                except Exception as e:
+                    print(e)
                 if user.is_active:
                     message = {'code': '0', "userInfo": user_dict, "message": "登录成功", "user_token": token, "user_role": user_role_name}
                     return JsonResponse(message)

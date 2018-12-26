@@ -91,11 +91,10 @@
         </el-form-item>
 
         <el-form-item label="最后登录："  :label-width="formLabelWidth" prop="last_login">
-
+            <!--value-format="yyyy-MM-dd HH:mm:dd"-->
             <el-date-picker
               v-model="form.last_login"
               type="datetime"
-              value-format="yyyy-MM-dd HH:mm:dd"
               placeholder="选择日期">
             </el-date-picker>
 
@@ -244,7 +243,8 @@
         this.dialogTitle = '详情';
         this.dialogAddVisible = true;
         this.form = row;
-        this.form.last_login = row.last_login;
+        this.form.last_login = this.dateFormatter(row.last_login, true);
+        console.log(this.form.last_login);
         this.isOnlyRead = true;
         let getUserOwnRoleUrl = baseHost + '/userRole/getUserOwnRole/';
         let http_token = this.$store.state.token;
@@ -303,7 +303,7 @@
         this.dialogTitle = '新增';
         this.dialogAddVisible = true;
         this.form = {};
-        this.form.last_login = new Date();
+        this.form.last_login = this.dateFormatter(new Date(), true);
         this.userRole = null;
         this.isOnlyRead = false;
       },
@@ -413,7 +413,21 @@
           }
         });
       },
-
+      dateFormatter:function (str) {
+        var hasTime = arguments[1] != false ? true : false;//可传第二个参数false，返回yyyy-MM-dd
+        var d = new Date(str);
+        var year = d.getFullYear();
+        var month = (d.getMonth()+1)<10 ? '0'+(d.getMonth()+1) : (d.getMonth()+1);
+        var day = d.getDate()<10 ? '0'+d.getDate() : d.getDate();
+        var hour = d.getHours()<10 ? '0'+d.getHours() : d.getHours();
+        var minute = d.getMinutes()<10 ? '0'+d.getMinutes() : d.getMinutes();
+        var second = d.getSeconds()<10 ? '0'+d.getSeconds() : d.getSeconds();
+        if(hasTime){
+          return [year, month, day].join('-') + " " + [hour, minute, second].join(':');
+        }else{
+          return [year, month, day].join('-');
+        }
+      },
     }
   }
 </script>
