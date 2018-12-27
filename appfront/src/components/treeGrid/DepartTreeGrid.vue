@@ -96,7 +96,7 @@
   import ElButton from "element-ui/packages/button/src/button";
   import ElFormItem from "element-ui/packages/form/src/form-item";
   import ElInput from "element-ui/packages/input/src/input";
-  import axios from 'axios'
+  import axios from '../../utils/axiosConfig'
   import baseHost from '../../api/baseHost'
   import hasPermission from '../../utils/util'
   export default {

@@ -132,7 +132,7 @@
   </div>
 </template>
 <script>
-  import axios from 'axios'
+  import axios from '../../../utils/axiosConfig'
   import baseHost from '../../../api/baseHost'
   import ElRadio from "element-ui/packages/radio/src/radio";
   import ElButton from "element-ui/packages/button/src/button";

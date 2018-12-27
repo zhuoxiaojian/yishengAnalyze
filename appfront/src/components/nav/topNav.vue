@@ -90,7 +90,7 @@
 </template>
 <script>
   import 'element-ui/lib/theme-chalk/display.css';
-  import axios from 'axios'
+  import axios from '../../utils/axiosConfig'
   import baseHost from '../../api/baseHost'
   import ElFormItem from "element-ui/packages/form/src/form-item";
   import ElInput from "element-ui/packages/input/src/input";

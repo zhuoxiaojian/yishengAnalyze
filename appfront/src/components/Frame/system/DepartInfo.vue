@@ -6,7 +6,7 @@
 
 <script>
   import DepartTreeGrid from '../../treeGrid/DepartTreeGrid'
-  import axios from 'axios'
+  import axios from '../../../utils/axiosConfig'
   import baseHost from '../../../api/baseHost'
   export default {
     name: 'depart-info',

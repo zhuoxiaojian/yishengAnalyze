@@ -49,7 +49,7 @@
   </aside>
 </template>
 <script>
-  import axios from 'axios'
+  import axios from '../../utils/axiosConfig'
   import baseHost from '../../api/baseHost'
   import ElMenu from "element-ui/packages/menu/src/menu";
   import NavMenu from "./navMenu";

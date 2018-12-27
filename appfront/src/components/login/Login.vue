@@ -26,7 +26,7 @@
 </template>
 
 <script>
-  import axios from 'axios'
+  import axios from '../../utils/axiosConfig'
   import * as appfrontLoginAPI from '@/api/appfrontLoginAPI'
   import * as constant from '@/utils/constant'
   import ElForm from "element-ui/packages/form/src/form";
