@@ -41,12 +41,18 @@
                 if (item) {
                     delItem.path === this.$route.fullPath && this.$router.push(item.path);
                 }else{
+                    this.$store.commit("clearToken");
+                    localStorage.removeItem('access-user');
+                    localStorage.removeItem('access-user-roleName');
                     this.$router.push('/');
                 }
             },
             // 关闭全部标签
             closeAll(){
                 this.tagsList = [];
+                this.$store.commit("clearToken");
+                localStorage.removeItem('access-user');
+                localStorage.removeItem('access-user-roleName');
                 this.$router.push('/');
             },
             // 关闭其他标签
