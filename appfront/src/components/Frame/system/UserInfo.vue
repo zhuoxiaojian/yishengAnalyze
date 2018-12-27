@@ -7,7 +7,7 @@
             <el-input v-model="filters.username" placeholder="请输入用户名" auto-complete="off" @keyup.enter.native="handleSearch" ><i slot="prefix" class="el-input__icon el-icon-search"></i></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" size="medium" v-on:click="handleSearch">查询</el-button>
+            <el-button type="default" size="medium" v-on:click="handleSearch">查询</el-button>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" size="medium" @click="showAddDialog" :disabled="hasAddPermission">新增</el-button>

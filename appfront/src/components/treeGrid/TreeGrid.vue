@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-button type="primary" size="medium" @click="addEquipment" :disabled="hasAddPermission">新增</el-button>　
+    <el-button type="default" size="medium" @click="addEquipment" :disabled="hasAddPermission">新增</el-button>　
     <el-button type="primary" size="medium" @click="oneKeyToAdd" :disabled="hasAddPermission">一键添加</el-button>
   <el-table
     :data="data"
