@@ -16,6 +16,7 @@ from utils.MakeToken import get_token_code
 from utils.CacheUtils import write_to_cache, deleteKey, checkKey
 from rest_framework.views import APIView
 from django.contrib.auth.models import Group
+from django.conf import settings
 import json
 #前端退出接口
 @csrf_exempt
@@ -35,9 +36,16 @@ def appfrontLogout(request):
 def checkUserToken(request):
     response = {}
     user_token = request.META.get("HTTP_AUTHORIZATION")
-    st = SystemToken.objects.filter(token=user_token)
-    if st.exists():
-        response['code'] = 200
+    st = SystemToken.objects.filter(token=user_token).first()
+    if st:
+        now_time = datetime.datetime.now()
+        token_time = st.create_time
+        judge_time = (now_time-token_time).total_seconds()
+        session_time = settings.SESSION_COOKIE_AGE
+        if judge_time > session_time:
+            response['code'] = 300
+        else:
+            response['code'] = 200
     else:
         response['code'] = 300
     return JsonResponse(response)
@@ -81,9 +89,9 @@ class LoginView(APIView):
                     # print(system_token.id, system_token.user_id, system_token.token)
                     if checkKey(system_token.token):
                         deleteKey(system_token.token)
-                    SystemToken.objects.filter(id=system_token.id).update(user_id=user.id, token=token)
+                    SystemToken.objects.filter(id=system_token.id).update(user_id=user.id, token=token, create_time=datetime.datetime.now())
                 else:
-                    SystemToken.objects.create(user_id=user.id, token=token)
+                    SystemToken.objects.create(user_id=user.id, token=token, create_time=datetime.datetime.now())
                 # request.session['user_session'] = token
 
                 cacheLoginUserInfo['currentUserInfo'] = user_dict
