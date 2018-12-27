@@ -152,7 +152,7 @@
     }
 
     .tags-li.active .tags-li-title {
-        color: #0000cc;
+        color: #fff0f0;
     }
 
     .tags-close-box {
