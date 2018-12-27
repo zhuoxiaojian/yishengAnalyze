@@ -71,13 +71,19 @@
       let token = that.$store.state.token;
       let getMenuUrl = baseHost + '/roleMenu/getRoleMenuList/';//'/roleMenu/getRoleMenuCodeList/';
       axios.get(getMenuUrl, {headers:{ 'Authorization':token}}).then((response)=>{
-        let r = that.$router.options.routes;
-        let rr;
+        // let r = that.$router.options.routes;
+        // let rr;
         let menuCodeList = response.data.MenuCodeList;
-        for(let index in r){
-          if(r[index].name == that.$store.state.leftNavState){
-             rr = r[index].children;
-          }
+        // for(let index in r){
+        //   if(r[index].name == that.$store.state.leftNavState){
+        //      rr = r[index].children;
+        //   }
+        // }
+        let current_path = that.$route.path;
+        if(JSON.stringify(menuCodeList).indexOf(current_path) <= -1){
+            if(current_path != "/appfront/Home"){
+              that.$router.push("/");
+            }
         }
         if(response.data.MenuRoleName === 'superUser'){
           that.menuInfos = menuCodeList;
