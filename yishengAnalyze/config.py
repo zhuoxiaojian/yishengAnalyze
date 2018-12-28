@@ -7,14 +7,14 @@
 #最顶头加上
 from __future__ import absolute_import
 from yishengAnalyze.settings import TIME_ZONE
-from datetime import timedelta
-from celery.schedules import crontab
-import time
+# from datetime import timedelta
+# from celery.schedules import crontab
+# import time
 # import djcelery
 # djcelery.setup_loader()
 #本地
-# CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler' # 定时任务
-# CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
+CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler' # 定时任务
+CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
 
 BROKER_URL = 'redis://:123456@127.0.0.1:6379/4'
 CELERY_RESULT_BAKEND = 'redis://:123456@127.0.0.1:6379/5'
@@ -33,15 +33,15 @@ CELERY_TIMEZONE = TIME_ZONE
 # 配置定时任务
 # celery beat -A  yishengAnalyze  启动定时任务
 # celery -A yishengAnalyze worker -l info  启动worker进程
-CELERYBEAT_SCHEDULE = {
-    'test': {
-        'task': 'users.tasks.test',  # tasks.py模块下的getCamp方法
-        'schedule': timedelta(seconds=5*60),      # 每隔1分钟运行一次
-        # 'args': (23, 12),
-    },
+# CELERYBEAT_SCHEDULE = {
+#     'test': {
+#         'task': 'users.tasks.test',  # tasks.py模块下的getCamp方法
+#         'schedule': timedelta(seconds=5*60),      # 每隔1分钟运行一次
+#         # 'args': (23, 12),
+#     },
     # 'update_seo_level': {
     #     'task': 'customers.tasks.update_seo_level',
     #     'schedule': crontab(minute=u'55', hour=u'17', ),
     # },
 
-}
+# }

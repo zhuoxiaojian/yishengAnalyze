@@ -1,6 +1,4 @@
-__author__ = 'zjj'
-__date__ = '2018/3/12 10:22'
-
+from __future__ import absolute_import
 from celery import Celery
 from yishengAnalyze import settings
 import os

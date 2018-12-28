@@ -55,6 +55,11 @@ INSTALLED_APPS = [
     'constant',
     'rest_framework',
     'corsheaders',
+
+    #添加定时任务管理
+    'djcelery',
+    'systemTask',
+
     'yiShengUser'
 
 ]

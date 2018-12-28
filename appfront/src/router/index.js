@@ -103,6 +103,39 @@ export default new Router({
           menuCode: 'ContentTypePage',
         },
         {
+          path: '/appfront/Task',
+          component: resolve=> require(['@/components/Frame/Task'], resolve),
+          name: '任务管理',
+          iconCls: 'el-icon-menu',
+          menuShow: true,
+          menuCode: 'TaskPage',
+          meta: {requireAuth: true},
+        },
+        {
+          path: '/appfront/Task/PeriodicTaskInfo',
+          component: resolve=> require(['@/components/Frame/Task/PeriodicTaskInfo'], resolve),
+          name: '定时任务',
+          menuShow: true,
+          menuCode: 'PeriodicTaskPage',
+          meta: {requireAuth: true},
+        },
+        {
+          path: '/appfront/Task/IntervalScheduleInfo',
+          component: resolve=> require(['@/components/Frame/Task/IntervalScheduleInfo'], resolve),
+          name: '循环时间',
+          menuShow: true,
+          menuCode: 'IntervalSchedulePage',
+          meta: {requireAuth: true},
+        },
+        {
+          path: '/appfront/Task/CrontabScheduleInfo',
+          component: resolve=> require(['@/components/Frame/Task/CrontabScheduleInfo'], resolve),
+          name: '定时时间',
+          menuShow: true,
+          menuCode: 'CrontabScheduleInfo',
+          meta: {requireAuth: true},
+        },
+        {
           path: '/appfront/Back',
           component: resolve=> require(['@/components/Frame/Back'], resolve),
           name: '后台管理',
@@ -133,7 +166,8 @@ export default new Router({
           menuShow: true,
           meta: {requireAuth: true,},
           menuCode: 'yiShengFtpUserPage'
-        }
+        },
+
       ]
     },
 

@@ -82,4 +82,34 @@
     "is_parent": false,
     "parent_code": "BackPage"
   }]
-}]
+},
+  {
+    "name": "任务管理",
+    "path": "/appfront/Task",
+    "menuCode": "TaskPage",
+    "iconCls": "el-icon-menu",
+    "is_parent": true,
+    "children": [{
+      "name": "定时任务",
+      "path": "/appfront/Task/PeriodicTaskInfo",
+      "menuCode": "PeriodicTaskPage",
+      "iconCls": null,
+      "is_parent": false,
+      "parent_code": "TaskPage"
+    }, {
+      "name": "循环时间",
+      "path": "/appfront/Task/IntervalScheduleInfo",
+      "menuCode": "IntervalSchedulePage",
+      "iconCls": null,
+      "is_parent": false,
+      "parent_code": "TaskPage"
+    }, {
+      "name": "定时时间",
+      "path": "/appfront/Task/CrontabScheduleInfo",
+      "menuCode": "CrontabSchedulePage",
+      "iconCls": null,
+      "is_parent": false,
+      "parent_code": "TaskPage"
+    }]
+  }
+]
