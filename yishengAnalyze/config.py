@@ -42,18 +42,24 @@ CELERY_TIMEZONE = TIME_ZONE
 #         'schedule': timedelta(seconds=5*60),      # 每隔1分钟运行一次
 #         # 'args': (23, 12),
 #     },
-    # 'update_seo_level': {
-    #     'task': 'customers.tasks.update_seo_level',
-    #     'schedule': crontab(minute=u'55', hour=u'17', ),
-    # },
+#     'update_seo_level': {
+#         'task': 'customers.tasks.update_seo_level',
+#         'schedule': crontab(minute=u'55', hour=u'17', ),
+#     },
 
 # }
-
+# 消息队列配置
 CELERY_QUEUES = (
     Queue("default", Exchange("default"), routing_key="default"),
-    Queue("test_queue", Exchange("test_exchange"), routing_key="test_routing_key"),
+    Queue("test_queue", Exchange("test_queue"), routing_key="test_queue"),
+    Queue("test_async", Exchange("test_async"), routing_key="test_async"),
 )
 
+# 异步配置
+CELERY_ROUTES = {
+    # 异步测试
+    'users.tasks.asyncTest': {"queue": "test_async", "routing_key": "test_async"},
+}
 # 修改配置文件, 保证队列优先级
 
 # from kombu import Queue

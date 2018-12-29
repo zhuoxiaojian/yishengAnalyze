@@ -29,6 +29,11 @@ def page_error(request):
     response = render_to_response('500.html', {})
     response.status_code = 500
     return response
-
+from users.tasks import asyncTest
+from django.http import JsonResponse
+def test(request):
+    asyncTest.delay()
+    print('------------------测试请求--------------')
+    return JsonResponse({'code': 200})
 
 

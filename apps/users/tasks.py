@@ -16,3 +16,10 @@ def test():
 def mul(x, y):
     print("乘法")
     print("---结果：", x*y)
+
+@task.task()
+def asyncTest():
+    print("------------异步测试-------------------")
+
+if __name__ == '__main__':
+    asyncTest.delay()
