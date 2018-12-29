@@ -15,8 +15,9 @@
       <el-table :data="tableData" border style="width: 100%" tooltip-effect="dark" higlight-current-row>
         <el-table-column property="id" label="ID"></el-table-column>
         <el-table-column property="name" label="名称"  ></el-table-column>
-        <el-table-column property="task_id" label="任务ID" ></el-table-column>
+        <el-table-column property="task_id" label="任务ID" :show-overflow-tooltip="true"></el-table-column>
         <el-table-column property="state" label="状态"  ></el-table-column>
+        <el-table-column property="runtime" label="执行时长" :show-overflow-tooltip="true"></el-table-column>
         <el-table-column property="tstamp" label="运行时间"
                          :formatter="dateFormat" sortable></el-table-column>
       </el-table>
