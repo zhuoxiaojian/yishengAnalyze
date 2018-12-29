@@ -17,9 +17,9 @@ class TaskStateAPIView(APIView):
     def get(self, request):
         taskStateName = request.GET.get('taskStateName')
         if taskStateName:
-            taskState = TaskState.objects.filter(name__icontains=taskStateName).order_by('id')
+            taskState = TaskState.objects.filter(name__icontains=taskStateName).order_by('-id')
         else:
-            taskState = TaskState.objects.all().order_by('id')
+            taskState = TaskState.objects.all().order_by('-id')
         pg = StandardPageNumberPagination()
         page_roles = pg.paginate_queryset(queryset=taskState, request=request, view=self)
         serializer = TaskStateSerializer(instance=page_roles, many=True)
