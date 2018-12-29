@@ -18,11 +18,11 @@ CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler' # 定时任务
 CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
 
 BROKER_URL = 'redis://:123456@127.0.0.1:6379/4'
-CELERY_RESULT_BAKEND = 'redis://:123456@127.0.0.1:6379/5'
+CELERY_RESULT_BACKEND = 'redis://:123456@127.0.0.1:6379/5'
 
 #测试服
 # BROKER_URL = 'redis://:123456@smsredis:6379/1'
-# CELERY_RESULT_BAKEND = 'redis://:123456@smsredis:6379/2'
+# CELERY_RESULT_BACKEND = 'redis://:123456@smsredis:6379/2'
 
 # celery内容等消息的格式设置
 CELERY_ACCEPT_CONTENT = ['application/json']
