@@ -79,6 +79,7 @@
         //      rr = r[index].children;
         //   }
         // }
+        let initMenu = [{name:'系统管理', path:'/appfront/System', iconCls:'el-icon-menu',menuShow: true, children:[{name:'菜单管理', path:'/appfront/System/MenuInfo', menuShow: true}]}];
         let current_path = that.$route.path;
         if(JSON.stringify(menuCodeList).indexOf(current_path) <= -1){
             if(current_path != "/appfront/Home"){
@@ -86,7 +87,11 @@
             }
         }
         if(response.data.MenuRoleName === 'superUser'){
-          that.menuInfos = menuCodeList;
+          if(menuCodeList.length <= 0){
+            that.menuInfos = initMenu;
+          }else{
+            that.menuInfos = menuCodeList;
+          }
           that.menuRoleName = response.data.MenuRoleName;
         }else{
           that.menuInfos = menuCodeList;

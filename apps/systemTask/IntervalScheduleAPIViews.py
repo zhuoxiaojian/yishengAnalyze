@@ -14,8 +14,8 @@ from rest_framework.permissions import DjangoModelPermissions
 from systemTask.IntervalScheduleSerializers import IntervalScheduleSerializer
 class IntervalScheduleAPIView(APIView):
     queryset = IntervalSchedule.objects.all()
-    authentication_classes = []
-    permission_classes = []
+    authentication_classes = [TokenAuth, ]
+    permission_classes = [DjangoModelPermissions, ]
     def get(self, request):
         intervalSchedulePeriodName = request.GET.get('intervalSchedulePeriodName')
         if intervalSchedulePeriodName:
@@ -37,8 +37,8 @@ class IntervalScheduleAPIView(APIView):
 
 class IntervalScheduleDetail(APIView):
     queryset = IntervalSchedule.objects.all()
-    authentication_classes = []
-    permission_classes = []
+    authentication_classes = [TokenAuth, ]
+    permission_classes = [DjangoModelPermissions, ]
     def get_object(self, pk):
         try:
             return IntervalSchedule.objects.get(pk=pk)

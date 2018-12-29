@@ -7,10 +7,11 @@
 from rest_framework.views import APIView
 from django.http import JsonResponse
 from djcelery.models import IntervalSchedule, CrontabSchedule
-
+from utils.apiAuth import TokenAuth
 class getAllIntervalScheduleAPIView(APIView):
     queryset = IntervalSchedule.objects.all()
-
+    authentication_classes = [TokenAuth, ]
+    permission_classes = []
     def get(self, request):
         response = {}
         result_list = []
@@ -26,7 +27,8 @@ class getAllIntervalScheduleAPIView(APIView):
 
 class getAllCrontabScheduleAPIView(APIView):
     queryset = IntervalSchedule.objects.all()
-
+    authentication_classes = [TokenAuth, ]
+    permission_classes = []
     def get(self, request):
         response = {}
         result_list = []

@@ -14,8 +14,8 @@ from rest_framework.permissions import DjangoModelPermissions
 from systemTask.PeriodicTaskSerializers import PeriodicTaskSerializer
 class PeriodicTaskAPIView(APIView):
     queryset = PeriodicTask.objects.all()
-    authentication_classes = []
-    permission_classes = []
+    authentication_classes = [TokenAuth, ]
+    permission_classes = [DjangoModelPermissions, ]
     def get(self, request):
         periodicTaskName = request.GET.get('periodicTaskName')
         if periodicTaskName:
@@ -37,8 +37,8 @@ class PeriodicTaskAPIView(APIView):
 
 class PeriodicTaskDetail(APIView):
     queryset = PeriodicTask.objects.all()
-    authentication_classes = []
-    permission_classes = []
+    authentication_classes = [TokenAuth, ]
+    permission_classes = [DjangoModelPermissions, ]
     def get_object(self, pk):
         try:
             return PeriodicTask.objects.get(pk=pk)

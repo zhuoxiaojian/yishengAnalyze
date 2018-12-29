@@ -14,8 +14,8 @@ from rest_framework.permissions import DjangoModelPermissions
 from systemTask.CrontabScheduleSerializers import CrontabScheduleSerializer
 class CrontabScheduleAPIView(APIView):
     queryset = CrontabSchedule.objects.all()
-    authentication_classes = []
-    permission_classes = []
+    authentication_classes = [TokenAuth, ]
+    permission_classes = [DjangoModelPermissions, ]
     def get(self, request):
         crontabSchedule = CrontabSchedule.objects.all().order_by('id')
         pg = StandardPageNumberPagination()
@@ -33,8 +33,8 @@ class CrontabScheduleAPIView(APIView):
 
 class CrontabScheduleDetail(APIView):
     queryset = CrontabSchedule.objects.all()
-    authentication_classes = []
-    permission_classes = []
+    authentication_classes = [TokenAuth, ]
+    permission_classes = [DjangoModelPermissions, ]
     def get_object(self, pk):
         try:
             return CrontabSchedule.objects.get(pk=pk)
