@@ -110,6 +110,13 @@
       "iconCls": null,
       "is_parent": false,
       "parent_code": "TaskPage"
+    },{
+      "name": "任务监控",
+      "path": "/appfront/Task/TaskStateInfo",
+      "menuCode": "TaskStatePage",
+      "iconCls": null,
+      "is_parent": false,
+      "parent_code": "TaskPage"
     }]
   }
 ]

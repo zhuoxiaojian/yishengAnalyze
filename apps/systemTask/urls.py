@@ -8,6 +8,7 @@ from django.conf.urls import url
 from systemTask.IntervalScheduleAPIViews import IntervalScheduleAPIView, IntervalScheduleDetail
 from systemTask.CrontabScheduleAPIViews import CrontabScheduleAPIView, CrontabScheduleDetail
 from systemTask.PeriodicTaskAPIViews import PeriodicTaskAPIView, PeriodicTaskDetail
+from systemTask.TaskStateAPIViews import TaskStateAPIView
 from systemTask.systemTaskView import getAllCrontabScheduleAPIView, getAllIntervalScheduleAPIView
 urlpatterns = [
     url(r'^intervalSchedule/$', IntervalScheduleAPIView.as_view()),
@@ -16,6 +17,7 @@ urlpatterns = [
     url(r'^crontabScheduleDetail/(?P<pk>[0-9]+)/$', CrontabScheduleDetail.as_view()),
     url(r'^periodicTask/$', PeriodicTaskAPIView.as_view()),
     url(r'^periodicTaskDetail/(?P<pk>[0-9]+)/$', PeriodicTaskDetail.as_view()),
+    url(r'^taskState/$', TaskStateAPIView.as_view()),
 
     url(r'^getAllIntervalSchedule/$', getAllIntervalScheduleAPIView.as_view()),
     url(r'^getAllCrontabSchedule/$', getAllCrontabScheduleAPIView.as_view())

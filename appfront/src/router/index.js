@@ -132,7 +132,14 @@ export default new Router({
           component: resolve=> require(['@/components/Frame/Task/CrontabScheduleInfo'], resolve),
           name: '定时时间',
           menuShow: true,
-          menuCode: 'CrontabScheduleInfo',
+          menuCode: 'CrontabSchedulePage',
+          meta: {requireAuth: true},
+        },{
+          path: '/appfront/Task/TaskStateInfo',
+          component: resolve=> require(['@/components/Frame/Task/TaskStateInfo'], resolve),
+          name: '任务监控',
+          menuShow: true,
+          menuCode: 'TaskStatePage',
           meta: {requireAuth: true},
         },
         {
