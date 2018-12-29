@@ -33,8 +33,9 @@ CELERY_TIMEZONE = TIME_ZONE
 #CELERY_TASK_RESULT_EXPIRES = 60 * 60 * 24   # 任务过期时间
 # 配置定时任务
 # celery beat -A  yishengAnalyze  启动定时任务
-# celery -A yishengAnalyze worker -l info  启动worker进程
+# celery -A yishengAnalyze worker -l info  -E 启动worker进程, E启动事件
 # celery flower --broker=redis://:123456@127.0.0.1:6379/4  监控celery
+# python manage.py celerycam 启动快照，进行任务监控
 # CELERYBEAT_SCHEDULE = {
 #     'test': {
 #         'task': 'users.tasks.test',  # tasks.py模块下的getCamp方法
