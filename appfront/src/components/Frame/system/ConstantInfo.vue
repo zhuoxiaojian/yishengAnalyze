@@ -12,10 +12,14 @@
           <el-form-item>
             <el-button type="primary" size="medium" @click="showAddDialog" :disabled="hasAddPermission">新增</el-button>
           </el-form-item>
+          <el-form-item>
+            <el-button type="danger" size="medium" @click="delAll">批量删除</el-button>
+          </el-form-item>
         </el-form>
       </el-col>
       <!--表格数据-->
-      <el-table :data="tableData" border style="width: 100%" tooltip-effect="dark" higlight-current-row>
+      <el-table :data="tableData" border style="width: 100%" tooltip-effect="dark" @selection-change="handleSelectionChange" higlight-current-row>
+        <el-table-column type="selection" width="55" align="center"></el-table-column>
         <el-table-column property="id" label="ID"></el-table-column>
         <el-table-column property="name" label="键名"  sortable></el-table-column>
         <el-table-column property="value" label="键值" ></el-table-column>
@@ -69,13 +73,17 @@
   import baseHost from '../../../api/baseHost'
   import ElRadio from "element-ui/packages/radio/src/radio";
   import hasPermission from "../../../utils/util";
+  import ElFormItem from "element-ui/packages/form/src/form-item";
   export default {
-    components: {ElRadio},
+    components: {
+      ElFormItem,
+      ElRadio},
     name: 'constant-info',
     inject: ['reload'],
     data: function(){
       return {
-
+        multipleSelection: [],
+        del_list: [],
         show: false,
         loading: false,
         total: 0,
@@ -271,7 +279,25 @@
           }
         });
       },
-
+      delAll:function () {
+        const length = this.multipleSelection.length;
+        let str = '';
+        this.del_list = this.del_list.concat(this.multipleSelection);
+        for (let i = 0; i < length; i++) {
+          str += this.multipleSelection[i].id + ',';
+        }
+        if(str != ''){
+          str = str.substring(0, str.lastIndexOf(','));
+        }else{
+          this.$message.error('请勾选要删除的数据');
+          return ;
+        }
+        this.$message.error('删除了' + str);
+        this.multipleSelection = [];
+      },
+      handleSelectionChange(val) {
+        this.multipleSelection = val;
+      },
     }
   }
 </script>

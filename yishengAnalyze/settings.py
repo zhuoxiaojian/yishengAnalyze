@@ -59,7 +59,7 @@ INSTALLED_APPS = [
     #添加定时任务管理
     'djcelery',
     'systemTask',
-
+    'django_filters',
     'yiShengUser'
 
 ]
@@ -113,16 +113,20 @@ DATABASES = {
     },
     'db01': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'yishengAnalyze_pro',
+        'NAME': 'jeecg',
         'HOST': 'localhost',
         'PORT': 22799,
         'USER': 'root',
         'PASSWORD': '123456'
     },
-    # 'db02': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': os.path.join(BASE_DIR, 'db_02'),
-    # },
+    'db02': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'ysanalyze',
+        'HOST': 'localhost',
+        'PORT': 22799,
+        'USER': 'root',
+        'PASSWORD': '123456'
+    },
 }
 # 在models中的class Meta:中指定app_label
 # app_label = "app02"
@@ -138,7 +142,18 @@ DATABASE_APPS_MAPPING = {
     #     'auth':  'db01',
     #     'contenttypes': 'db01',
     #     'sessions': 'db01',
-    'yiShengUser': 'db01'
+    'YishengUser': 'db01',
+    'verifyCode': 'db01',
+    'Optimization': 'db01',
+    'Industry': 'db01',
+    'FtpUser': 'db01',
+    'Contract': 'db01',
+    'Channel': 'db01',
+    'HelpInstruction': 'db01',
+    'HitAvgPrice': 'db01',
+    'UserSites': 'db01',
+
+
 }
 # migrate  --database=db01
 
@@ -150,7 +165,8 @@ CACHES = {
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
             "PASSWORD": "123456"
-        }
+        },
+        # 'TIMEOUT': 3600,
     }
 }
 REDIS_TIMEOUT = 7*24*60*60

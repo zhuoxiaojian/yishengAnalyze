@@ -14,16 +14,16 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from utils.StandardPageNumberPaginationUtils import StandardPageNumberPagination
-from utils.apiAuth import TokenAuth
-from yiShengUser.models import YiShengUser
-from yiShengUser.serializers import YiShengUserSerializer
-from rest_framework.permissions import DjangoModelPermissions
+from .models import YishengUser
+from .serializers import YiShengUserSerializer
 class YiShengUserApiView(APIView):
-    queryset = YiShengUser.objects.all()
-    authentication_classes = [TokenAuth, ]
-    permission_classes = [DjangoModelPermissions, ]
+    queryset = YishengUser.objects.all()
+    authentication_classes = []
+    permission_classes = []
+
+
     def get(self, request):
-        yiShengUser = YiShengUser.objects.all().order_by('id')
+        yiShengUser = YishengUser.objects.all().order_by('id')
         pg = StandardPageNumberPagination()
         page_roles = pg.paginate_queryset(queryset=yiShengUser, request=request, view=self)
         serializer = YiShengUserSerializer(instance=page_roles, many=True)
@@ -41,12 +41,12 @@ class YiShengUserApiView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class YiShengUserDetail(APIView):
-    queryset = YiShengUser.objects.all()
-    authentication_classes = [TokenAuth, ]
-    permission_classes = [DjangoModelPermissions, ]
+    queryset = YishengUser.objects.all()
+    authentication_classes = []
+    permission_classes = []
     def get_object(self, pk):
         try:
-            return YiShengUser.objects.get(pk=pk)
+            return YishengUser.objects.get(pk=pk)
         except Exception as e:
             pass
 

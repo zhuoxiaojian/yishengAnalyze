@@ -5,8 +5,8 @@
 # @File    : serializers.py
 # @Software: PyCharm
 from rest_framework import serializers
-from yiShengUser.models import YiShengUser
+from yiShengUser.models import YishengUser
 class YiShengUserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = YiShengUser
+        model = YishengUser
         fields = '__all__'

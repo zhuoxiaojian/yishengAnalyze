@@ -21,5 +21,10 @@ def mul(x, y):
 def asyncTest():
     print("------------异步测试-------------------")
 
+@task.task()
+def ceshi(*args, **kwargs):
+    print('args:', args)
+    print('kwargs:', kwargs)
+
 if __name__ == '__main__':
     asyncTest.delay()

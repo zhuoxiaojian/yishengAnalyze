@@ -19,11 +19,14 @@ import xadmin
 from django.views.generic import TemplateView
 from rest_framework.authtoken.views import obtain_auth_token
 from rest_framework_jwt.views import obtain_jwt_token, verify_jwt_token, refresh_jwt_token
+from yishengAnalyze.settings import MEDIA_ROOT
+from django.views.static import serve
 urlpatterns = [
     url('^admin/', xadmin.site.urls),
     # url('^$', RedirectView.as_view(url='/admin'), name='login'),
     url('^login/', RedirectView.as_view(url='/admin'), name='login'),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^media/(?P<path>.*)$',  serve, {"document_root": MEDIA_ROOT}),
     url(r'^$', TemplateView.as_view(template_name="index.html")),
     url(r'^appfront/', TemplateView.as_view(template_name="index.html")),
     url(r'^api/token', obtain_auth_token, name='api_token'),
@@ -39,6 +42,7 @@ urlpatterns = [
     url(r'^permissions/', include('permission.urls')),
     url(r'^contentType/', include('contentType.urls')),
     url(r'^systemTask/', include('systemTask.urls')),
+    url(r'^file/', include('fileUpload.urls')),
     #
     url(r'^api/v1/login/$', obtain_jwt_token, name='APILogin'),
     url(r'^yiShengUser/', include('yiShengUser.urls'))

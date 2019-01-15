@@ -53,7 +53,31 @@
     "iconCls": null,
     "is_parent": false,
     "parent_code": "SystemPage"
-  }]
+  },{
+    "name": "报表管理",
+    "path": "/appfront/System/BaseChartInfo",
+    "menuCode": "BaseChartPage",
+    "iconCls": null,
+    "is_parent": false,
+    "parent_code": "SystemPage"
+  },
+    {
+      "name": "MarkDown",
+      "path": "/appfront/System/MarkDownInfo",
+      "menuCode": "MarkDownPage",
+      "iconCls": null,
+      "is_parent": false,
+      "parent_code": "SystemPage"
+    },
+    {
+      "name": "VueEditor",
+      "path": "/appfront/System/VueEditorInfo",
+      "menuCode": "VueEditorPage",
+      "iconCls": null,
+      "is_parent": false,
+      "parent_code": "SystemPage"
+    }
+  ]
 }, {
   "name": "后台管理",
   "path": "/appfront/Back",

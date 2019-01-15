@@ -1,4 +1,5 @@
 .idea
+media
 celerybeat.pid
 celerybeat-schedule.bak
 celerybeat-schedule.dat
