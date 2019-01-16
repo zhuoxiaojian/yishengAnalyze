@@ -53,59 +53,8 @@
     "iconCls": null,
     "is_parent": false,
     "parent_code": "SystemPage"
-  },{
-    "name": "报表管理",
-    "path": "/appfront/System/BaseChartInfo",
-    "menuCode": "BaseChartPage",
-    "iconCls": null,
-    "is_parent": false,
-    "parent_code": "SystemPage"
-  },
-    {
-      "name": "MarkDown",
-      "path": "/appfront/System/MarkDownInfo",
-      "menuCode": "MarkDownPage",
-      "iconCls": null,
-      "is_parent": false,
-      "parent_code": "SystemPage"
-    },
-    {
-      "name": "VueEditor",
-      "path": "/appfront/System/VueEditorInfo",
-      "menuCode": "VueEditorPage",
-      "iconCls": null,
-      "is_parent": false,
-      "parent_code": "SystemPage"
-    }
+  }
   ]
-}, {
-  "name": "后台管理",
-  "path": "/appfront/Back",
-  "menuCode": "BackPage",
-  "iconCls": "el-icon-menu",
-  "is_parent": true,
-  "children": [{
-    "name": "网站管理",
-    "path": "/appfront/Back/yiShengUser",
-    "menuCode": "yiShengUserPage",
-    "iconCls": null,
-    "is_parent": false,
-    "parent_code": "BackPage"
-  }, {
-    "name": "合同管理",
-    "path": "/appfront/Back/yiShengContract",
-    "menuCode": "yiShengContractPage",
-    "iconCls": null,
-    "is_parent": false,
-    "parent_code": "BackPage"
-  }, {
-    "name": "FTP管理",
-    "path": "/appfront/Back/yiShengFtpUser",
-    "menuCode": "yiShengFtpUserPage",
-    "iconCls": null,
-    "is_parent": false,
-    "parent_code": "BackPage"
-  }]
 },
   {
     "name": "任务管理",
@@ -141,6 +90,67 @@
       "iconCls": null,
       "is_parent": false,
       "parent_code": "TaskPage"
+    }]
+  },{
+  "name": "其它案例",
+  "path": "/appfront/Demo",
+  "menuCode": "DemoPage",
+  "iconCls": "el-icon-menu",
+  "is_parent": true,
+  "children":[
+    {
+      "name": "报表管理",
+      "path": "/appfront/Demo/BaseChartInfo",
+      "menuCode": "BaseChartPage",
+      "iconCls": null,
+      "is_parent": false,
+      "parent_code": "SystemPage"
+    },
+    {
+      "name": "MarkDown",
+      "path": "/appfront/Demo/MarkDownInfo",
+      "menuCode": "MarkDownPage",
+      "iconCls": null,
+      "is_parent": false,
+      "parent_code": "SystemPage"
+    },
+    {
+      "name": "VueEditor",
+      "path": "/appfront/Demo/VueEditorInfo",
+      "menuCode": "VueEditorPage",
+      "iconCls": null,
+      "is_parent": false,
+      "parent_code": "SystemPage"
+    }
+  ]
+},
+  {
+    "name": "后台管理",
+    "path": "/appfront/Back",
+    "menuCode": "BackPage",
+    "iconCls": "el-icon-menu",
+    "is_parent": true,
+    "children": [{
+      "name": "网站管理",
+      "path": "/appfront/Back/yiShengUser",
+      "menuCode": "yiShengUserPage",
+      "iconCls": null,
+      "is_parent": false,
+      "parent_code": "BackPage"
+    }, {
+      "name": "合同管理",
+      "path": "/appfront/Back/yiShengContract",
+      "menuCode": "yiShengContractPage",
+      "iconCls": null,
+      "is_parent": false,
+      "parent_code": "BackPage"
+    }, {
+      "name": "FTP管理",
+      "path": "/appfront/Back/yiShengFtpUser",
+      "menuCode": "yiShengFtpUserPage",
+      "iconCls": null,
+      "is_parent": false,
+      "parent_code": "BackPage"
     }]
   }
 ]
