@@ -104,7 +104,7 @@
       "menuCode": "BaseChartPage",
       "iconCls": null,
       "is_parent": false,
-      "parent_code": "SystemPage"
+      "parent_code": "DemoPage"
     },
     {
       "name": "MarkDown",
@@ -112,7 +112,7 @@
       "menuCode": "MarkDownPage",
       "iconCls": null,
       "is_parent": false,
-      "parent_code": "SystemPage"
+      "parent_code": "DemoPage"
     },
     {
       "name": "VueEditor",
@@ -120,7 +120,23 @@
       "menuCode": "VueEditorPage",
       "iconCls": null,
       "is_parent": false,
-      "parent_code": "SystemPage"
+      "parent_code": "DemoPage"
+    },
+    {
+      "name": "Tab选项卡",
+      "path": "/appfront/Demo/TabsInfo",
+      "menuCode": "TabsPage",
+      "iconCls": null,
+      "is_parent": false,
+      "parent_code": "DemoPage"
+    },
+    {
+      "name": "系统消息",
+      "path": "/appfront/System/SystemMessageInfo",
+      "menuCode": "SystemMessagePage",
+      "iconCls": null,
+      "is_parent": false,
+      "parent_code": "DemoPage"
     }
   ]
 },

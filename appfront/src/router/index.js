@@ -103,6 +103,14 @@ export default new Router({
           menuCode: 'ContentTypePage',
         },
         {
+          path: '/appfront/System/SystemMessageInfo',
+          component: resolve=> require(['@/components/Frame/System/SystemMessageInfo'], resolve),
+          name: '系统消息',
+          menuShow: true,
+          meta: {requireAuth: true,},
+          menuCode: 'SystemMessagePage',
+        },
+        {
           path: '/appfront/Demo',
           component: resolve=> require(['@/components/Frame/Demo'], resolve),
           name: '其它案例',
@@ -125,6 +133,14 @@ export default new Router({
           menuShow: true,
           meta: {requireAuth: true,},
           menuCode: 'MarkDownPage',
+        },
+        {
+          path: '/appfront/Demo/TabsInfo',
+          component: resolve=> require(['@/components/Frame/Demo/TabsInfo'], resolve),
+          name: 'Tab选项卡',
+          menuShow: true,
+          meta: {requireAuth: true,},
+          menuCode: 'TabsPage',
         },
         {
           path: '/appfront/Demo/VueEditorInfo',

@@ -43,6 +43,7 @@ urlpatterns = [
     url(r'^contentType/', include('contentType.urls')),
     url(r'^systemTask/', include('systemTask.urls')),
     url(r'^file/', include('fileUpload.urls')),
+    url(r'^systemMessage/', include('systemMessage.urls')),
     #
     url(r'^api/v1/login/$', obtain_jwt_token, name='APILogin'),
     url(r'^yiShengUser/', include('yiShengUser.urls'))

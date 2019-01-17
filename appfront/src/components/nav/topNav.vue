@@ -11,6 +11,25 @@
       </div>
       <div class="topbar-account topbar-btn">
         <el-dropdown trigger="click">
+             <!-- 全屏显示 -->
+                <div class="btn-fullscreen" @click="handleFullScreen">
+                    <el-tooltip effect="dark" :content="fullscreen?`取消全屏`:`全屏`" placement="bottom">
+                        <i class="el-icon-rank"></i>
+                    </el-tooltip>
+                </div>
+        </el-dropdown>
+        <el-dropdown trigger="click">
+          <!-- 消息中心 -->
+                <div class="btn-bell">
+                    <el-tooltip effect="dark" :content="messageCount?`有${messageCount}条未读消息`:`消息中心`" placement="bottom">
+                        <router-link to="/appfront/Demo/TabsInfo">
+                            <i class="el-icon-bell"></i>
+                        </router-link>
+                    </el-tooltip>
+                    <span class="btn-bell-badge" v-if="messageCount"></span>
+                </div>
+        </el-dropdown>
+        <el-dropdown trigger="click">
           <span class="el-dropdown-link userinfo-inner">
             <i class="iconfont icon-user"></i> {{roleName}}-{{nickname}}   <i class="el-icon-caret-bottom"></i></span>
           <el-dropdown-menu slot="dropdown">
@@ -101,10 +120,11 @@
       ElFormItem},
     data(){
       return {
+        fullscreen: false,
         loading: false,
         nickname: '',
         roleName: '',
-        messageCount: 5,
+        messageCount: null,
         formLabelWidth: '80px',
         showUserInfoDialogVisible: false,
         showPasswordDialogVisible: false,
@@ -169,6 +189,24 @@
             this.$router.push('/');
           });
       }
+      //获取未读消息总数
+      let getMessageCountUrl = baseHost + '/systemMessage/getSystemMessage/';
+      let that = this;
+      axios.get(getMessageCountUrl, {params: {flagParams: '0,1'}}).then((response)=>{
+        let json_list = response.data.resultData; //list集合
+        for(let i=0; i < json_list.length; i++){
+          if(json_list[i].hasOwnProperty('flag0')){
+             that.messageCount = json_list[i].flag0.flag0Count;
+             break;
+          }
+        }
+
+      }).catch(()=>{
+
+      });
+    },
+    created(){
+      
     },
     watch:{
 
@@ -305,8 +343,55 @@
               }).catch();
             }
           });
-      }
-
+      },
+      handleFullScreen(){
+        let element = document.documentElement;
+          if (this.fullscreen) {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitCancelFullScreen) {
+                        document.webkitCancelFullScreen();
+                } else if (document.mozCancelFullScreen) {
+                        document.mozCancelFullScreen();
+                } else if (document.msExitFullscreen) {
+                        document.msExitFullscreen();
+                }
+          } else {
+                if (element.requestFullscreen) {
+                    element.requestFullscreen();
+                } else if (element.webkitRequestFullScreen) {
+                    element.webkitRequestFullScreen();
+                } else if (element.mozRequestFullScreen) {
+                    element.mozRequestFullScreen();
+                } else if (element.msRequestFullscreen) {
+                    // IE11
+                    element.msRequestFullscreen();
+                }
+              }
+        this.fullscreen = !this.fullscreen;    
+      },
     }
   }
 </script>
+<style scoped>
+  .btn-bell-badge{
+        position: absolute;
+        right: 0;
+        top: 15px;
+        width: 8px;
+        height: 8px;
+        border-radius: 4px;
+        background: #f56c6c;
+        color: #fff;
+    }
+    .btn-bell .el-icon-bell{
+        color: #fff;
+    }
+    .btn-fullscreen .el-icon-rank{
+      color: #fff;
+    }
+    .btn-fullscreen{
+      margin-right: 10px;
+    }
+     
+</style>

@@ -59,6 +59,8 @@ INSTALLED_APPS = [
     #添加定时任务管理
     'djcelery',
     'systemTask',
+    'systemMessage',
+
     'django_filters',
     'yiShengUser'
 
