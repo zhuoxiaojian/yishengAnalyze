@@ -16,14 +16,14 @@ class Migration(migrations.Migration):
             name='SystemMessage',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('message', models.TextField(verbose_name='消息')),
+                ('message_info', models.TextField(verbose_name='消息')),
                 ('create_date', models.DateTimeField(default=datetime.datetime.now, verbose_name='创建时间')),
                 ('flag', models.IntegerField(default=0, verbose_name='标签')),
             ],
             options={
                 'verbose_name': '系统消息',
                 'verbose_name_plural': '系统消息',
-                'db_table': 'ys_system_message',
+                'db_table': 'system_message',
             },
         ),
     ]

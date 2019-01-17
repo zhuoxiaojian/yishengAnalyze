@@ -7,7 +7,7 @@ class SystemMessage(models.Model):
     flag = models.IntegerField(verbose_name='标签', null=False, blank=False, default=0)
 
     class Meta:
-        db_table = 'ys_system_message'
+        db_table = 'system_message'
         verbose_name = '系统消息'
         verbose_name_plural = verbose_name
 
