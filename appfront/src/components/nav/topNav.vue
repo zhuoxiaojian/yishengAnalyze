@@ -192,7 +192,7 @@
       //获取未读消息总数
       let getMessageCountUrl = baseHost + '/systemMessage/getSystemMessage/';
       let that = this;
-      axios.get(getMessageCountUrl, {params: {flagParams: '0,1'}}).then((response)=>{
+      axios.get(getMessageCountUrl, {params: {flagParams: '0'}}).then((response)=>{
         let json_list = response.data.resultData; //list集合
         for(let i=0; i < json_list.length; i++){
           if(json_list[i].hasOwnProperty('flag0')){
