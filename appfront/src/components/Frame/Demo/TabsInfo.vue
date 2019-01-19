@@ -1,7 +1,5 @@
 <template>
     <div class="">
-        
-       
             <el-tabs v-model="message">
                 <el-tab-pane :label="`未读消息(${unread.length})`" name="first">
                     <el-table :data="unread" :show-header="false" style="width: 100%" higlight-current-row>
@@ -11,7 +9,7 @@
                                 <span class="message-title">{{scope.row.message_info}}</span>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="create_date"></el-table-column>
+                        <el-table-column prop="create_date" :formatter="dateFormat"></el-table-column>
                         <el-table-column width="120">
                             <template slot-scope="scope">
                                 <el-button size="small" @click="handleRead(scope.$index, scope.row)">标为已读</el-button>
@@ -31,7 +29,7 @@
                                     <span class="message-title">{{scope.row.message_info}}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column prop="create_date"></el-table-column>
+                            <el-table-column prop="create_date" :formatter="dateFormat"></el-table-column>
                             <el-table-column >
                                 <template slot-scope="scope">
                                     <el-button type="danger" @click="handleDel(scope.$index, scope.row)">删除</el-button>
@@ -52,7 +50,7 @@
                                     <span class="message-title">{{scope.row.message_info}}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column prop="create_date"></el-table-column>
+                            <el-table-column prop="create_date" :formatter="dateFormat"></el-table-column>
                             <el-table-column width="120">
                                 <template slot-scope="scope">
                                     <el-button @click="handleRestore(scope.$index, scope.row)">还原</el-button>
@@ -65,7 +63,7 @@
                     </template>
                 </el-tab-pane>
             </el-tabs>
-       
+
     </div>
 </template>
 
@@ -85,6 +83,14 @@
             }
         },
         methods: {
+          dateFormat(row, column){
+            if(row.create_date == null){
+              return '';
+            }
+            let time = new Date(row.create_date);
+            return `${time.getFullYear()}-${time.getMonth() + 1 >= 10 ? (time.getMonth() + 1) : '0' + (time.getMonth() + 1)}-${time.getDate() >= 10 ? time.getDate() : '0' + time.getDate()}
+                        ${time.getHours() >= 10 ? time.getHours() : '0' + time.getHours()} : ${time.getMinutes()>=10?time.getMinutes():'0'+time.getMinutes()} : ${time.getSeconds() >= 10 ? time.getSeconds() : '0' + time.getSeconds()}`;
+          },
             handleMethod(params){
                 let that = this;
                 let handleUrl = baseHost + '/systemMessage/getSystemMessage/';
