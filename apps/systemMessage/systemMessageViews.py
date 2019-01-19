@@ -13,7 +13,7 @@ from rest_framework.views import APIView
 
 class SystemMessageView(APIView):
     queryset = SystemMessage.objects.all().order_by('id')
-    # authentication_classes = [TokenAuth, ]
+    authentication_classes = [TokenAuth, ]
     # permission_classes = [DjangoModelPermissions, ]
 
     def get(self, request):
