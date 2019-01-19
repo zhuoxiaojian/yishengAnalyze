@@ -54,7 +54,7 @@
           <el-input v-model="systemMessageForm.id" placeholder="ID" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="消息：" :label-width="formLabelWidth" prop="message_info">
-          <el-input v-model="systemMessageForm.message_info" placeholder="消息" auto-complete="off"></el-input>
+          <el-input type="textarea" :rows="7" v-model="systemMessageForm.message_info" placeholder="消息" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="时间：" :label-width="formLabelWidth" prop="value">
            <el-date-picker
@@ -65,7 +65,7 @@
               placeholder="选择日期">
             </el-date-picker>
         </el-form-item>
-        <el-form-item label="标签：" :label-width="formLabelWidth" prop="remark">
+        <el-form-item label="标签：" :label-width="formLabelWidth" prop="flag">
            <el-select class="item-choose" v-model="systemMessageForm.flag" size="small">
             <el-option
               v-for="(item,index) in flagOptions"
