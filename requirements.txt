@@ -10,7 +10,7 @@ Automat==0.6.0
 backports.functools-lru-cache==1.4
 beautifulsoup4==4.6.0
 billiard==3.3.0.23
-bottle==0.12.13
+bottle==0.12.19
 celery==3.1.25
 certifi==2017.11.5
 cffi==1.11.2
