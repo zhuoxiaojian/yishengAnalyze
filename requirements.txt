@@ -82,7 +82,7 @@ opencv-python==3.4.0.12
 openpyxl==2.5.0
 pandas==0.21.1
 parsel==1.2.0
-Pillow==5.0.0
+Pillow==9.0.1
 pipreqs==0.4.9
 py==1.4.22
 pyasn1==0.4.2
