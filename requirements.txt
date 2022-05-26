@@ -126,7 +126,7 @@ social-auth-core==1.7.0
 South==1.0.2
 sqlparse==0.2.4
 tablib==0.12.1
-Twisted==17.9.0
+Twisted==22.4.0
 tzlocal==1.5.1
 unicodecsv==0.14.1
 uno==0.3.3
